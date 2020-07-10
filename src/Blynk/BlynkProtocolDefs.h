@@ -36,25 +36,10 @@ enum BlynkCmd
     BLYNK_CMD_PROPERTY       = 19,
     BLYNK_CMD_HARDWARE       = 20,
 
-    BLYNK_CMD_CREATE_DASH    = 21,
-    BLYNK_CMD_SAVE_DASH      = 22,
-    BLYNK_CMD_DELETE_DASH    = 23,
-    BLYNK_CMD_LOAD_PROF_GZ   = 24,
-    BLYNK_CMD_SYNC           = 25,
-    BLYNK_CMD_SHARING        = 26,
-    BLYNK_CMD_ADD_PUSH_TOKEN = 27,
-
-    //sharing commands
-    BLYNK_CMD_GET_SHARED_DASH = 29,
-    BLYNK_CMD_GET_SHARE_TOKEN = 30,
-    BLYNK_CMD_REFRESH_SHARE_TOKEN = 31,
-    BLYNK_CMD_SHARE_LOGIN     = 32,
-
-    BLYNK_CMD_REDIRECT        = 41,
-
-    BLYNK_CMD_DEBUG_PRINT     = 55,
-
-    BLYNK_CMD_EVENT_LOG       = 64
+    BLYNK_CMD_REDIRECT       = 41,
+    BLYNK_CMD_DEBUG_PRINT    = 55,
+    BLYNK_CMD_EVENT_LOG      = 64,
+    BLYNK_CMD_EVENT_CLEAR    = 65
 };
 
 enum BlynkStatus
@@ -134,5 +119,6 @@ BLYNK_ATTR_PACKED;
 #define BLYNK_INT_OTA  BLYNK_STR_32('o','t','a',0)
 #define BLYNK_INT_ACON BLYNK_STR_32('a','c','o','n')
 #define BLYNK_INT_ADIS BLYNK_STR_32('a','d','i','s')
+#define BLYNK_INT_META BLYNK_STR_32('m','e','t','a')
 
 #endif
