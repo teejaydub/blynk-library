@@ -1,4 +1,6 @@
-This is Timothy Weber's personal fork of Blynk's embedded client library, for backward-compatibility with my corresponding [https://github.com/teejaydub/blynk-server](fork of the Blynk server).
+## Fork note
+
+This is Timothy Weber's personal fork of Blynk's embedded client library, for backward-compatibility with my corresponding [fork of the Blynk server](https://github.com/teejaydub/blynk-server).
 
 [![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
 
