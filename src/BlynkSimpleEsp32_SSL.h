@@ -36,12 +36,22 @@ public:
     BlynkArduinoClientSecure(Client& client)
         : BlynkArduinoClientGen<Client>(client)
         , caCert(NULL)
+        , fingerprint(NULL)
     {}
 
     void setRootCA(const char* fp) { caCert = fp; }
 
+    void setFingerprint(const char* fp) { fingerprint = fp; }
+
     bool connect() {
-        this->client->setCACert(caCert);
+        if (fingerprint) {
+            BLYNK_LOG1(BLYNK_F("Setting insecure mode for fingerprint"));
+            this->client->setInsecure();  // we just connect without handshake, then check the cert's fingerprint
+        } else if (caCert) {
+            BLYNK_LOG1(BLYNK_F("Setting CA cert"));
+            this->client->setCACert(caCert);
+        }
+
         if (BlynkArduinoClientGen<Client>::connect()) {
           BLYNK_LOG1(BLYNK_F("Certificate OK"));
           return true;
@@ -53,6 +63,7 @@ public:
 
 private:
     const char* caCert;
+    const char* fingerprint;
 };
 
 template <typename Transport>
@@ -102,6 +113,10 @@ public:
         Base::begin(auth);
         this->conn.begin(ip, port);
         this->conn.setRootCA(root_ca);
+    }
+
+    void setFingerprint(const char* fp) {
+        this->conn.setFingerprint(fp);
     }
 
     void begin(const char* auth,
