@@ -28,6 +28,7 @@
 #include <Adapters/BlynkArduinoClient.h>
 #include <WiFiClientSecure.h>
 
+
 template <typename Client>
 class BlynkArduinoClientSecure
     : public BlynkArduinoClientGen<Client>
@@ -53,12 +54,29 @@ public:
         }
 
         if (BlynkArduinoClientGen<Client>::connect()) {
-          BLYNK_LOG1(BLYNK_F("Certificate OK"));
-          return true;
+            if (fingerprint) {
+                if (this->client->verify(fingerprint, NULL)) {
+                    BLYNK_LOG1("Fingerprint OK");
+                    return true;
+                } else {
+                    uint8_t remoteFP[32];
+                    if (this->client->getFingerprintSHA256(remoteFP)) {
+                        BLYNK_LOG1("Server fingerprint mismatch: ");
+                        for (int i = 0; i < FINGERPRINT_LEN; i++) 
+                            BLYNK_LOG("%02x", remoteFP[i]);
+                    } else {
+                        BLYNK_LOG1("Can't get server fingerprint");
+                    }
+                    return false;
+                }
+            } else {
+                BLYNK_LOG1(BLYNK_F("Certificate OK"));
+                return true;
+            }
         } else {
-          BLYNK_LOG1(BLYNK_F("Secure connection failed"));
+            BLYNK_LOG1(BLYNK_F("Secure connection failed"));
+            return false;
         }
-        return false;
     }
 
 private:
