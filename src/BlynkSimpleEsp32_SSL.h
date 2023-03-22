@@ -59,14 +59,22 @@ public:
                     BLYNK_LOG1("Fingerprint OK");
                     return true;
                 } else {
+                    #ifdef BLYNK_DEBUG
                     uint8_t remoteFP[32];
                     if (this->client->getFingerprintSHA256(remoteFP)) {
                         BLYNK_LOG1("Server fingerprint mismatch: ");
-                        for (int i = 0; i < FINGERPRINT_LEN; i++) 
-                            BLYNK_LOG("%02x", remoteFP[i]);
+                        for (int i = 0; i < FINGERPRINT_LEN; i++) {
+                            if (i > 0)
+                                BLYNK_PRINT.print(":");
+                            char hex[3];
+                            sprintf(hex, "%02X", remoteFP[i]);
+                            BLYNK_PRINT.print(hex);
+                        }
+                        BLYNK_PRINT.println("");
                     } else {
                         BLYNK_LOG1("Can't get server fingerprint");
                     }
+                    #endif
                     return false;
                 }
             } else {
