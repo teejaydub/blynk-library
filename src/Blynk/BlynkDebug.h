@@ -185,6 +185,9 @@ void BlynkFatal() BLYNK_NORETURN;
         #include <stdarg.h>
 
         BLYNK_UNUSED
+        #ifndef IN_BLYNK
+        void blynk_dbg_print(const char* BLYNK_PROGMEM fmt, ...);
+        #else
         void blynk_dbg_print(const char* BLYNK_PROGMEM fmt, ...)
         {
             va_list ap;
@@ -201,6 +204,7 @@ void BlynkFatal() BLYNK_NORETURN;
             BLYNK_PRINT.println(buff);
             va_end(ap);
         }
+        #endif  // IN_BLYNK
         #endif // ARDUINO_ARCH_ARC32
 
     #elif defined(LINUX) || defined(MBED_LIBRARY_VERSION)

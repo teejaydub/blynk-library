@@ -93,6 +93,8 @@ struct BlynkHeader
 }
 BLYNK_ATTR_PACKED;
 
+// Fix by TJW: only define these if the platform doesn't.
+#ifndef htons
 #if !defined(ESP32) && (defined(ARDUINO) || defined(ESP8266) || defined(PARTICLE) || defined(MBED_LIBRARY_VERSION))
     #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
         #define htons(x) ( ((x)<<8) | (((x)>>8)&0xFF) )
@@ -110,6 +112,7 @@ BLYNK_ATTR_PACKED;
     #else
         #error byte order problem
     #endif
+#endif
 #endif
 
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
